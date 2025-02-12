@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Tooltip Demo with Code Snippet</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      h1, h2 {
+        color: #222;
+      }
+      .demo-area {
+        margin: 30px 0;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .demo-area p,
+      .demo-area div,
+      .demo-area font {
+        margin: 10px 0;
+        padding: 5px;
+        background: #f7f7f7;
+      }
+      pre {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 5px;
+        overflow: auto;
+      }
+      code {
+        font-family: Consolas, monospace;
+      }
+      /* Tooltip styles */
+      .title-tooltip {
+        position: relative;
+        cursor: help;
+      }
+      .title-tooltip::after {
+        content: var(--tooltip);
+        position: fixed;
+        left: calc(var(--tooltip-x, 0px) + 10px);
+        top: calc(var(--tooltip-y, 0px) + 10px);
+        background: rgba(51, 51, 51, 0.9);
+        color: white;
+        padding: 8px 10px;
+        border-radius: 3px;
+        white-space: normal;
+        max-width: 200px;
+        overflow-wrap: break-word;
+        z-index: 100;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+      .title-tooltip:hover::after {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+    </style>
+    <script>
+      // Function to measure tooltip height dynamically
+      function measureTooltipHeight(text, refEl) {
+        var temp = document.createElement("span");
+        temp.style.position = "absolute";
+        temp.style.visibility = "hidden";
+        temp.style.padding = "8px 10px";
+        temp.style.borderRadius = "3px";
+        temp.style.whiteSpace = "normal";
+        temp.style.maxWidth = "200px";
+        temp.style.overflowWrap = "break-word";
+        var computed = window.getComputedStyle(refEl);
+        temp.style.font = computed.font;
+        temp.style.background = "rgba(51, 51, 51, 0.9)";
+        temp.style.color = "white";
+        temp.textContent = text;
+        document.body.appendChild(temp);
+        var height = temp.offsetHeight;
+        document.body.removeChild(temp);
+        return height;
+      }
+      
+      // Initialize tooltips on elements with a title attribute
+      function initializeTitleTooltips() {
+        document.querySelectorAll("[title]").forEach(function(el) {
+          var tooltipText = el.getAttribute("title");
+          el.style.setProperty("--tooltip", '"' + tooltipText + '"');
+          el.classList.add("title-tooltip");
+          el.removeAttribute("title");
+
+          el.addEventListener("mousemove", function(e) {
+            var offset = 10;
+            var x = e.clientX + offset;
+            var y = e.clientY + offset;
+            if (!el._tooltipHeight) {
+              el._tooltipHeight = measureTooltipHeight(tooltipText, el);
+            }
+            var tooltipHeight = el._tooltipHeight;
+            if (y + tooltipHeight + offset > window.innerHeight) {
+              y = y - tooltipHeight - offset - 20;
+              x = x - 20;
+            }
+            el.style.setProperty("--tooltip-x", x + "px");
+            el.style.setProperty("--tooltip-y", y + "px");
+          });
+        });
+      }
+      
+      document.addEventListener("DOMContentLoaded", initializeTitleTooltips);
+    </script>
+  </head>
+  <body>
+    <h1>Tooltip Demo with Code Snippet</h1>
+    <p>
+      This page demonstrates a custom tooltip functionality. When you hover over any element with a <code>title</code> attribute, the browser's native tooltip is disabled and replaced with a stylish, dynamic tooltip.
+    </p>
+    
+    <h2>Demo Area</h2>
+    <div class="demo-area">
+      <p title="This is a very long tooltip text that wraps automatically if it exceeds the maximum width.">Hover over this paragraph</p>
+      <div title="Simple tooltip">Hover over this div</div>
+      <font title="Another tooltip that demonstrates wrapping when necessary.">Hover over this font element</font>
+      <p>No tooltip on this paragraph since there's no title attribute</p>
+      <div style="margin-top:550px;" title="This tooltip adjusts its position if near the bottom of the viewport.">Hover near bottom</div>
+    </div>
+    
+    <h2>Copy &amp; Paste Code Snippet</h2>
+    <p>
+      To use this tooltip functionality on your webpage, simply copy and paste the code snippet below into your HTML file.
+    </p>
+    <pre>
+&lt;style&gt;
+  .title-tooltip {
+	position: relative;
+	cursor: help;
+  }
+  .title-tooltip::after {
+	content: var(--tooltip);
+	position: fixed;
+	left: calc(var(--tooltip-x, 0px) + 10px);
+	top: calc(var(--tooltip-y, 0px) + 10px);
+	background: rgba(51, 51, 51, 0.9);
+	color: white;
+	padding: 8px 10px;
+	border-radius: 3px;
+	white-space: normal;
+	max-width: 200px;
+	overflow-wrap: break-word;
+	z-index: 100;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(10px);
+	transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .title-tooltip:hover::after {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+  }
+&lt;/style&gt;
+&lt;script&gt;
+  function measureTooltipHeight(text, refEl) {
+	var temp = document.createElement("span");
+	temp.style.position = "absolute";
+	temp.style.visibility = "hidden";
+	temp.style.padding = "8px 10px";
+	temp.style.borderRadius = "3px";
+	temp.style.whiteSpace = "normal";
+	temp.style.maxWidth = "200px";
+	temp.style.overflowWrap = "break-word";
+	var computed = window.getComputedStyle(refEl);
+	temp.style.font = computed.font;
+	temp.style.background = "rgba(51, 51, 51, 0.9)";
+	temp.style.color = "white";
+	temp.textContent = text;
+	document.body.appendChild(temp);
+	var height = temp.offsetHeight;
+	document.body.removeChild(temp);
+	return height;
+  }
+  
+  function initializeTitleTooltips() {
+	document.querySelectorAll("[title]").forEach(function(el) {
+	  var tooltipText = el.getAttribute("title");
+	  el.style.setProperty("--tooltip", '"' + tooltipText + '"');
+	  el.classList.add("title-tooltip");
+	  el.removeAttribute("title");
+	  
+	  el.addEventListener("mousemove", function(e) {
+		var offset = 10;
+		var x = e.clientX + offset;
+		var y = e.clientY + offset;
+		if (!el._tooltipHeight) {
+		  el._tooltipHeight = measureTooltipHeight(tooltipText, el);
+		}
+		var tooltipHeight = el._tooltipHeight;
+		if (y + tooltipHeight + offset > window.innerHeight) {
+		  y = y - tooltipHeight - offset - 20;
+		  x = x - 20;
+		}
+		el.style.setProperty("--tooltip-x", x + "px");
+		el.style.setProperty("--tooltip-y", y + "px");
+	  });
+	});
+  }
+  
+  document.addEventListener("DOMContentLoaded", initializeTitleTooltips);
+&lt;/script&gt;
+    </pre>
+    <p>
+      Simply include this code in your HTML file. Any element with a <code>title</code> attribute will now display the custom tooltip.
+    </p>
+  </body>
+</html>
