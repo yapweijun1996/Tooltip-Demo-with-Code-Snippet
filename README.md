@@ -9,7 +9,7 @@ A simple implementation of custom tooltips using HTML, CSS, and JavaScript. This
 - **Responsive & Flexible:** Automatically wraps long text and adapts to different element styles.
 
 ## Demo
-
+https://yapweijun1996.github.io/Tooltip-Demo-with-Code-Snippet/
 To see the tooltip in action, simply open the `index.html` file in your browser. The demo includes various elements with tooltips, including one near the bottom of the page to demonstrate dynamic positioning.
 
 ## Getting Started
