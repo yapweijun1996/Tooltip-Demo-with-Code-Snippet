@@ -10,6 +10,8 @@ A simple implementation of custom tooltips using HTML, CSS, and JavaScript. This
 
 ## Demo
 https://yapweijun1996.github.io/Tooltip-Demo-with-Code-Snippet/
+
+## Notes
 To see the tooltip in action, simply open the `index.html` file in your browser. The demo includes various elements with tooltips, including one near the bottom of the page to demonstrate dynamic positioning.
 
 ## Getting Started
